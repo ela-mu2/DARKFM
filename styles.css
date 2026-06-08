@@ -1,0 +1,60 @@
+/* color custom */
+:root {
+    --bg-main: #0F172A;
+    --bg-surface: #1E293B;
+    --accent: #14B8A6;
+    --text-title: #FFFFFF;
+    --text-body: #94A3B8;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-body);
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* text color */
+h1, h2, h3, h4, h5, h6, .text-white-custom {
+    color: var(--text-title) ;
+}
+
+.text-muted-custom {
+    color: var(--text-body) ;
+}
+
+/* card custom */
+.card-custom {
+    background-color: var(--bg-surface);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    transition: transform 0.2s;
+}
+.card-custom:hover {
+    transform: translateY(-5px);
+}
+
+/* accent */
+.accent-color {
+    color: var(--accent) ;
+}
+
+.btn-accent {
+    background-color: var(--accent);
+    color: #0F172A;
+    font-weight: 600;
+    border: none;
+}
+.btn-accent:hover {
+    background-color: #0D9488;
+    color: #FFFFFF;
+}
+
+.progress-bar-accent {
+    background-color: var(--accent);
+}
+
+/* navbar */
+.navbar-custom {
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
