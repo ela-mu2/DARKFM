@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="password" class="form-control text-white" id="password" name="password" style="background: rgba(255,255,255,0.02)" required/>
           </div>
           <div class="d-grid">
-            <button type="submit" class="btn btn-outline-info mt-2 text-white-custom" style="border-color: var(--accent); color: var(--accent) !important;">
+            <button type="submit" class="btn btn-outline-info mt-2 text-white-custom" style="border-color: var(--accent); color: var(--accent) ;">
               Login
             </button>
           </div>

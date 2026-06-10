@@ -58,3 +58,7 @@ h1, h2, h3, h4, h5, h6, .text-white-custom {
     background-color: var(--bg-surface);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
+
+.bg-grey {
+    background: rgba(255,255,255,0.02);
+}
