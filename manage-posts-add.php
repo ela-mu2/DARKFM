@@ -4,7 +4,8 @@ require_once 'header.php'; // 引入后自动拉起 Session 与权限拦截
 require_once 'db.php';
 
 // 允许 Admin 和 Editor 角色进入
-if ($user_role !== 'Admin' && $user_role !== 'Editor') {
+// 已修复大小写问题
+if ($user_role !== 'admin' && $user_role !== 'editor') {
     echo "<script>alert('Permission denied! Authorized personnel only.'); window.location.href='dashboard.php';</script>";
     exit;
 }

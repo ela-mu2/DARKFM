@@ -26,6 +26,8 @@ if (!isset($_SESSION['user_id'])) {
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
     />
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
     <div class="container mx-auto my-5" style="max-width: 700px;">
@@ -61,7 +63,9 @@ if (!isset($_SESSION['user_id'])) {
         >
       </div>
     </div>
-
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
@@ -122,6 +126,71 @@ if (!isset($_SESSION['user_id'])) {
             });
             tableBody.innerHTML = html;
         }
+    });
+
+    // 确保在表格动态渲染完成后，或者使用事件委托绑定点击
+    $(document).on('click', '.btn-delete', function(e) {
+    e.preventDefault();
+    const scheduleId = $(this).data('id'); 
+    
+    // 1. 确认弹窗 (UI)
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#008080', // Teal 强调色
+        cancelButtonColor: '#64748b',  // Slate 灰色
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        // 如果用户点了确定
+        if (result.isConfirmed) {
+            
+            const formData = new URLSearchParams();
+            formData.append('id', scheduleId);
+
+            // 跑去后台删除
+            fetch('api_delete_schedule.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData.toString()
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    // 2. 完美的成功提示 (UI)
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted!',
+                        text: data.message,
+                        confirmButtonColor: '#008080'
+                    });
+                    window.location.reload();// 刷新数据表格
+                } else {
+                    // 3. 后端拦截的警告提示 (UI)
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Notice',
+                        text: data.message,
+                        confirmButtonColor: '#008080'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                // 4. 彻底崩溃的兜底错误提示 (UI)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'System Error',
+                    text: error.className === 'SyntaxError' ? 'Invalid response from server.' : 'Connection failed.',
+                    confirmButtonColor: '#008080'
+                });
+            });
+        }
+        });
     });
     </script>
   </body>
