@@ -59,7 +59,6 @@ DARKFM/
 ├── manage-schedule-edit.php 	# Schedule dynamic editing form page (data automatically displayed)
 ├── README.md 					# Project architecture documentation
 └── student-guide.md 			# Development/student guide manual
-
 ```
 
 # 📻 DarkFM - 现代感暗调电台管理系统
@@ -91,6 +90,7 @@ DARKFM/
 ## 📂 目前项目结构
 
 ```text
+
 DARKFM/
 ├── actions/                  		# 处理表单提交与同步业务逻辑 (执行后重定向)
 │   ├── action_edit_schedule.php  	# 修改排班逻辑
@@ -113,4 +113,3 @@ DARKFM/
 ├── manage-schedule.php       		# 排班管理主列表 (包含搜索与 LIMIT 分页)
 ├── manage-schedule-edit.php  		# 排班动态编辑表单页 (数据自动回显)
 ├── README.md                 		# 项目架构说明文档
-└── student-guide.md          		# 开发/学生指南手册
