@@ -113,7 +113,7 @@ if (!isset($_SESSION['user_id'])) {
                   </td>
                   <td class="text-end">
                     <div class="buttons">
-                      <a href="manage-posts-edit.php?id=${item.schedule_id}" class="btn btn-outline-secondary btn-sm me-2">
+                      <a href="manage-schedule-edit.php?id=${item.schedule_id}" class="btn btn-outline-info btn-sm">
                         <i class="bi bi-pencil"></i>
                       </a>
                       <button class="btn btn-outline-danger btn-sm btn-delete" data-id="${item.schedule_id}">
