@@ -35,13 +35,29 @@ Project Features
 ## 📂 Current Project Structure
 
 ```text
-
-├── db.php      # Database underlying PDO connection configuration
-├── css         # Dark-themed custom stylesheet
-├── login.html     # Login page
-├── signup.html    # Registration page
-├── dashboard.html # Backend management homepage
-└── index.html     # Radio frontend display homepage
+DARKFM/
+├── actions/ 					          # Handles form submission and synchronous business logic (redirection after execution)
+│ ├── action_edit_schedule.php  # Modifies scheduling logic
+│ ├── login.php 				        # Handles login verification
+│ └── signup.php 				        # Handles user registration
+├── api/ 						            # Asynchronous API folder (receives Fetch requests and returns plain JSON)
+│ ├── api_check_conflict.php 	  # Scheduling conflict prevention detection API
+│ ├── api_delete_schedule.php 	# One-click deletion of scheduling API
+│ └── api_get.php 				      # Dynamic data retrieval API
+├── config/ 					          # Global basic configuration
+│ └── db.php 					          # PDO database connection
+├── includes/ 					        # Public components and static resources
+│ ├── assets/
+│ │ └── css/
+│ │ └── styles.css 			        # Minimalist dark style custom styles
+│ └── header.php 				        # Global header (including permission interception, Bootstrap 5 integration)
+├── dashboard.php 				      # Admin dashboard homepage
+├── index.html 					        # Static homepage (can be kept or modified as needed)
+├── manage-posts-add.php 		    # Add article/program announcement page
+├── manage-schedule.php 		    # Schedule management main list (including search and LIMIT pagination)
+├── manage-schedule-edit.php 	  # Schedule dynamic editing form page (data automatically displayed)
+├── README.md 					        # Project architecture documentation
+└── student-guide.md 			      # Development/student guide manual
 
 ```
 
@@ -74,9 +90,26 @@ Project Features
 ## 📂 目前项目结构
 
 ```text
-├── db.php          # 数据库底层 PDO 连接配置
-├── css             # 暗色调自定义样式表
-├── login.html          # 登录页
-├── signup.html         # 注册页
-├── dashboard.html      # 后台管理主页
-└── index.html          # 电台前端展示主页
+DARKFM/
+├── actions/                      # 处理表单提交与同步业务逻辑 (执行后重定向)
+│   ├── action_edit_schedule.php  # 修改排班逻辑
+│   ├── login.php                 # 处理登录验证
+│   └── signup.php                # 处理用户注册
+├── api/                          # 异步接口文件夹 (接收 Fetch 请求，返回纯 JSON)
+│   ├── api_check_conflict.php    # 排班防冲突检测接口
+│   ├── api_delete_schedule.php   # 一键删除排班接口
+│   └── api_get.php               # 动态获取数据接口
+├── config/                       # 全局基础配置
+│   └── db.php                    # PDO 数据库连接
+├── includes/                     # 公共公共组件与静态资源
+│   ├── assets/
+│   │   └── css/
+│   │       └── styles.css        # 极简暗黑风自定义样式
+│   └── header.php                # 全局头部（包含权限拦截、Bootstrap 5 引入）
+├── dashboard.php                 # 管理员仪表盘主页
+├── index.html                    # 静态首页 (可根据需求保留或删改)
+├── manage-posts-add.php          # 添加文章/节目公告页
+├── manage-schedule.php           # 排班管理主列表 (包含搜索与 LIMIT 分页)
+├── manage-schedule-edit.php      # 排班动态编辑表单页 (数据自动回显)
+├── README.md                     # 项目架构说明文档
+└── student-guide.md              # 开发/学生指南手册
