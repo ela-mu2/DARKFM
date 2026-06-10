@@ -1,13 +1,11 @@
 <?php
-// api_get.php
+// api/api_get.php
 header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: *'); // 允许跨域（本地开发备用）
+header('Access-Control-Allow-Origin: *');
 
-require_once 'db.php';
+require_once '../config/db.php';
 
 try {
-    // 联合查询：排班表、节目表、主持人表
-    // 严格对应你在 student-guide.md 中规划的字段名
     $sql = "SELECT 
                 s.id AS schedule_id,
                 s.air_date,
@@ -23,17 +21,15 @@ try {
     $stmt = $pdo->query($sql);
     $schedules = $stmt->fetchAll();
 
-    // 吐出标准 JSON
     echo json_encode([
         'status' => 'success',
-        'data' => $schedules
+        'data'   => $schedules
     ], JSON_UNESCAPED_UNICODE);
 
 } catch (\PDOException $e) {
-    // 捕获异常，输出错误 JSON（生产环境建议记录日志，这里方便你调试）
     http_response_code(500);
     echo json_encode([
-        'status' => 'error',
+        'status'  => 'error',
         'message' => 'Failed to fetch schedule data: ' . $e->getMessage()
     ]);
 }

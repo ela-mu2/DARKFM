@@ -2,7 +2,7 @@
 $host    = 'localhost';
 $db      = 'darkfm';
 $user    = 'root';
-$pass    = ''; 
+$pass    = '';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

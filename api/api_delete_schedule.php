@@ -1,10 +1,10 @@
 <?php
-// api_delete_schedule.php
+// api/api_delete_schedule.php
 header('Content-Type: application/json');
 session_start();
-require_once 'db.php';
+require_once '../config/db.php';
 
-// 1. 如果没登录，直接返回 JSON，绝不使用 header() 强跳网页
+// 1. 未登录直接返回 JSON
 if (!isset($_SESSION['user_id']) && !isset($_SESSION['user'])) {
     echo json_encode(['success' => false, 'message' => 'User not logged in.']);
     exit;

@@ -1,31 +1,18 @@
 <?php
 session_start();
-// 未登录踢走
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: actions/login.php");
     exit;
 }
-// 登录了但不是 Admin 也踢走
-// if ($_SESSION['role'] !== 'Admin') {
-//     echo "<script>alert('Permission denied! Admin only.'); window.location.href='dashboard.php';</script>";
-//     exit;
-// }
 ?>
 <!DOCTYPE html>
 <html>
   <head>
     <title>DARKFM - Manage Schedule</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
-    />
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"/>
+    <link rel="stylesheet" href="includes/assets/css/styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
@@ -34,9 +21,7 @@ if (!isset($_SESSION['user_id'])) {
       <div class="d-flex justify-content-between align-items-center mb-2">
         <h1 class="h1">Manage Schedule</h1>
         <div class="text-end">
-          <a href="manage-posts-add.php" class="btn btn-accent btn-sm text-white-custom"
-            >Add New Post</a
-          >
+          <a href="manage-posts-add.php" class="btn btn-accent btn-sm text-white-custom">Add New Post</a>
         </div>
       </div>
       <div class="card mb-2 p-4 card-custom">
@@ -58,25 +43,21 @@ if (!isset($_SESSION['user_id'])) {
       </div>
       <div class="text-center">
         <a href="dashboard.php" class="btn btn-outline-info btn-sm"
-           style="border-color: var(--accent); color: var(--accent);"
-          ><i class="bi bi-arrow-left"></i> Back to Dashboard</a
-        >
+           style="border-color: var(--accent); color: var(--accent);">
+          <i class="bi bi-arrow-left"></i> Back to Dashboard
+        </a>
       </div>
     </div>
-    
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-      crossorigin="anonymous"
-    ></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         const tableBody = document.getElementById('schedule-table-body');
 
-        fetch('api_get.php')
+        fetch('api/api_get.php')
             .then(response => {
                 if (!response.ok) throw new Error('HTTP error ' + response.status);
                 return response.json();
@@ -128,68 +109,45 @@ if (!isset($_SESSION['user_id'])) {
         }
     });
 
-    // 确保在表格动态渲染完成后，或者使用事件委托绑定点击
     $(document).on('click', '.btn-delete', function(e) {
-    e.preventDefault();
-    const scheduleId = $(this).data('id'); 
-    
-    // 1. 确认弹窗 (UI)
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#008080', // Teal 强调色
-        cancelButtonColor: '#64748b',  // Slate 灰色
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        // 如果用户点了确定
-        if (result.isConfirmed) {
-            
-            const formData = new URLSearchParams();
-            formData.append('id', scheduleId);
+        e.preventDefault();
+        const scheduleId = $(this).data('id');
 
-            // 跑去后台删除
-            fetch('api_delete_schedule.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: formData.toString()
-            })
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    // 2. 完美的成功提示 (UI)
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Deleted!',
-                        text: data.message,
-                        confirmButtonColor: '#008080'
-                    });
-                    window.location.reload();// 刷新数据表格
-                } else {
-                    // 3. 后端拦截的警告提示 (UI)
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Notice',
-                        text: data.message,
-                        confirmButtonColor: '#008080'
-                    });
-                }
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-                // 4. 彻底崩溃的兜底错误提示 (UI)
-                Swal.fire({
-                    icon: 'error',
-                    title: 'System Error',
-                    text: error.className === 'SyntaxError' ? 'Invalid response from server.' : 'Connection failed.',
-                    confirmButtonColor: '#008080'
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#008080',
+            cancelButtonColor: '#64748b',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const formData = new URLSearchParams();
+                formData.append('id', scheduleId);
+
+                fetch('api/api_delete_schedule.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData.toString()
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({ icon: 'success', title: 'Deleted!', text: data.message, confirmButtonColor: '#008080' });
+                        window.location.reload();
+                    } else {
+                        Swal.fire({ icon: 'error', title: 'Notice', text: data.message, confirmButtonColor: '#008080' });
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    Swal.fire({ icon: 'error', title: 'System Error', text: 'Connection failed.', confirmButtonColor: '#008080' });
                 });
-            });
-        }
+            }
         });
     });
     </script>
