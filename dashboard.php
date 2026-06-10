@@ -1,3 +1,11 @@
+<?php
+session_start();
+// 如果没有登录，直接踢回登录页
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -28,7 +36,7 @@
                 Manage Schedule
               </h5>
               <div class="text-center mt-3">
-                <a href="manage-schedule.html" class="btn btn-accent btn-sm text-white-custom" 
+                <a href="manage-schedule.php" class="btn btn-accent btn-sm text-white-custom" 
                   >Access</a
                 >
               </div>
@@ -46,7 +54,7 @@
                 Manage Hosts
               </h5>
               <div class="text-center mt-3">
-                <a href="manage-hosts.html" class="btn btn-accent btn-sm text-white-custom" 
+                <a href="manage-hosts.php" class="btn btn-accent btn-sm text-white-custom" 
                   >Access</a
                 >
               </div>
@@ -64,7 +72,7 @@
                 Manage Programs
               </h5>
               <div class="text-center mt-3">
-                <a href="manage-programs.html" class="btn btn-accent btn-sm text-white-custom" 
+                <a href="manage-programs.php" class="btn btn-accent btn-sm text-white-custom" 
                   >Access</a
                 >
               </div>
@@ -82,7 +90,7 @@
                 Manage Users
               </h5>
               <div class="text-center mt-3">
-                <a href="manage-users.html" class="btn btn-accent btn-sm text-white-custom"
+                <a href="manage-users.php" class="btn btn-accent btn-sm text-white-custom"
                   >Access</a
                 >
               </div>
