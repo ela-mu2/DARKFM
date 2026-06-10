@@ -1,4 +1,5 @@
 <?php
+// manage-posts-add.php
 require_once 'includes/header.php';
 require_once 'config/db.php';
 
@@ -52,6 +53,7 @@ try {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"/>
   <link rel="stylesheet" href="includes/assets/css/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css">
 </head>
 <body>
   <div class="container mx-auto my-5" style="max-width: 700px;">
@@ -67,7 +69,7 @@ try {
           <div class="alert alert-success bg-success text-white border-0 mb-3" style="--bs-bg-opacity: .2;"><?= htmlspecialchars($success) ?></div>
       <?php endif; ?>
 
-      <form method="POST" action="manage-posts-add.php">
+      <form id="addScheduleForm" method="POST">
         <div class="mb-3">
           <label for="program_id" class="form-label">Select Program</label>
           <select class="form-control text-white" id="program_id" name="program_id"
@@ -125,6 +127,10 @@ try {
     </div>
   </div>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="includes/js/schedule.js"></script>
+
 </body>
 </html>
