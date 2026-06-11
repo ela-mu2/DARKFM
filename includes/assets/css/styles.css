@@ -62,3 +62,20 @@ h1, h2, h3, h4, h5, h6, .text-white-custom {
 .bg-grey {
     background: rgba(255,255,255,0.02);
 }
+/* Hosts & Tables Custom */
+.card-dark { 
+    background-color: var(--bg-surface); 
+    border: 1px solid rgba(255, 255, 255, 0.05); 
+}
+.table-dark-custom { 
+    color: var(--text-title); 
+    border-color: rgba(255, 255, 255, 0.05); 
+}
+.table-dark-custom th { 
+    color: var(--accent); 
+    border-bottom: 2px solid rgba(255, 255, 255, 0.05); 
+}
+.table-dark-custom td { 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
+    vertical-align: middle; 
+}
