@@ -37,7 +37,7 @@ $role = $_SESSION['role'] ?? 'guest';
                     <?php endif; ?>
 
                     <?php if ($is_logged_in): ?>
-                        <li class="nav-item"><a class="nav-link accent-color-red" href="actions/logout.php">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link accent-color-red" href="actions/logout.php">Logout</a></li> 
                     <?php else: ?>
                         <li class="nav-item"><a class="nav-link accent-color" href="actions/login.php">Login</a></li>
                     <?php endif; ?>
