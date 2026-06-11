@@ -1,106 +1,136 @@
 <?php
 // actions/signup.php
+session_start();
 require_once '../config/db.php';
 
-$message = '';
-$status  = '';
+$error = '';
+$signup_success = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $email    = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
-    $confirm  = $_POST['confirm_password'] ?? '';
+    
+    // 默认注册的用户角色为普通 user，防止越权
+    $role = 'user'; 
 
-    if (empty($username) || empty($email) || empty($password)) {
-        $message = 'All fields are required.';
-        $status  = 'danger';
-    } elseif ($password !== $confirm) {
-        $message = 'Passwords do not match.';
-        $status  = 'danger';
-    } else {
+    if (!empty($username) && !empty($email) && !empty($password)) {
         try {
-            $stmt = $pdo->prepare("SELECT id FROM users WHERE email = :email LIMIT 1");
-            $stmt->execute(['email' => $email]);
-            if ($stmt->fetch()) {
-                $message = 'Email already exists.';
-                $status  = 'danger';
+            // 检查 Email 是否已经被注册
+            $checkStmt = $pdo->prepare("SELECT id FROM users WHERE email = :email LIMIT 1");
+            $checkStmt->execute(['email' => $email]);
+            
+            if ($checkStmt->fetch()) {
+                $error = 'This email is already registered!';
             } else {
-                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-                $sql = "INSERT INTO users (username, email, password, role) 
-                        VALUES (:username, :email, :password, 'Admin')";
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute([
+                // 核心安全：对明文密码进行 Hash 加密
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+                // 写入数据库
+                $insStmt = $pdo->prepare("INSERT INTO users (username, email, password, role) VALUES (:username, :email, :password, :role)");
+                $insStmt->execute([
                     'username' => $username,
                     'email'    => $email,
-                    'password' => $hashedPassword
+                    'password' => $hashed_password,
+                    'role'     => $role
                 ]);
 
-                $message = 'Registration successful! Go to Login.';
-                $status  = 'success';
+                $signup_success = true;
             }
         } catch (\PDOException $e) {
-            $message = 'Database error: ' . $e->getMessage();
-            $status  = 'danger';
+            $error = 'Database error: ' . $e->getMessage();
         }
+    } else {
+        $error = 'Please fill in all fields.';
     }
 }
 ?>
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>DARKFM - Signup</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"/>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - DARKFM</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
     <link rel="stylesheet" href="../includes/assets/css/styles.css">
-  </head>
-  <body>
-    <div class="container my-5 mx-auto" style="max-width: 500px;">
-      <h1 class="h1 mb-4 text-center">Sign Up</h1>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body style="background-color: #0f172a;">
 
-      <div class="card p-4" style="background: rgba(255,255,255,0.02)">
-        <?php if (!empty($message)): ?>
-            <div class="alert alert-<?= $status ?> border-0 mb-3"
-                 style="--bs-bg-opacity: .2; color: #fff;"><?= htmlspecialchars($message) ?></div>
-        <?php endif; ?>
-
-        <form method="POST" action="signup.php">
-          <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control text-white" id="username" name="username"
-                   style="background: rgba(255,255,255,0.02)" required/>
-          </div>
-          <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control text-white" id="email" name="email"
-                   style="background: rgba(255,255,255,0.02)" required/>
-          </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control text-white" id="password" name="password"
-                   style="background: rgba(255,255,255,0.02)" required/>
-          </div>
-          <div class="mb-3">
-            <label for="confirm_password" class="form-label">Confirm Password</label>
-            <input type="password" class="form-control text-white" id="confirm_password"
-                   name="confirm_password" style="background: rgba(255,255,255,0.02)" required/>
-          </div>
-          <div class="d-grid">
-            <button type="submit" class="btn btn-outline-info mt-2 text-white-custom"
-                    style="border-color: var(--accent); color: var(--accent);">
-              Sign Up
-            </button>
-          </div>
+    <?php if (!$signup_success): ?>
+    <div class="container mx-auto my-5" style="max-width: 450px;">
+      <div class="card card-custom p-4 shadow-sm">
+        <h2 class="text-center text-white-custom mb-4">
+            <i class="bi bi-person-plus accent-color me-2"></i>Create Account
+        </h2>
+            
+        <form action="signup.php" method="POST">
+            <div class="mb-3">
+                <label for="username" class="form-label text-white-custom">Username</label>
+                <input type="text" name="username" id="username" class="form-control bg-dark text-white border-secondary" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label text-white-custom">Email Address</label>
+                <input type="email" name="email" id="email" class="form-control bg-dark text-white border-secondary" required>
+            </div>
+            <div class="mb-4">
+                <label for="password" class="form-label text-white-custom">Password</label>
+                <input type="password" name="password" id="password" class="form-control bg-dark text-white border-secondary" required>
+            </div>
+            <button type="submit" class="btn btn-accent w-100 text-white-custom mb-3">Sign Up</button>
         </form>
+            
+        <div class="text-center">
+          <p class="text-muted-custom small mb-0">
+              Already have an account? <a href="login.php" class="accent-color text-decoration-none">Log In</a>
+          </p>
+        </div>
       </div>
 
-      <div class="d-flex justify-content-between align-items-center gap-3 mx-auto pt-3">
-        <a href="../index.html" class="text-decoration-none small">
-          <i class="bi bi-arrow-left-circle"></i> Go back
-        </a>
-        <a href="login.php" class="text-decoration-none small">
-          Already have an account? Login here <i class="bi bi-arrow-right-circle"></i>
+      <div class="text-center mt-3">
+        <a href="../index.php" class="btn btn-outline-info btn-sm w-sm-auto"
+          style="border-color: var(--accent); color: var(--accent);">
+            <i class="bi bi-arrow-left"></i> Back to Homepage
         </a>
       </div>
+
     </div>
-  </body>
+    <?php endif; ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // 注册成功提示
+    <?php if ($signup_success): ?>
+        Swal.fire({
+            title: 'Registration Complete!',
+            text: 'Your account has been created successfully. Redirecting to login...',
+            icon: 'success',
+            background: '#1e293b',
+            color: '#fff',
+            confirmButtonColor: '#14b8a6',
+            timer: 2000,
+            showConfirmButton: false,
+            willClose: () => {
+                window.location.href = 'login.php';
+            }
+        });
+    <?php endif; ?>
+
+    // 注册失败提示
+    <?php if (!empty($error)): ?>
+        Swal.fire({
+            title: 'Registration Failed',
+            text: '<?php echo addslashes($error); ?>',
+            icon: 'error',
+            background: '#1e293b',
+            color: '#fff',
+            confirmButtonColor: '#ef4444'
+        });
+    <?php endif; ?>
+});
+</script>
+
+</body>
 </html>

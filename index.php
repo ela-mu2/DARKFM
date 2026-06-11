@@ -1,12 +1,21 @@
+<?php
+session_start();
+// 获取当前登录状态与角色，默认未登录时为 guest (游客)
+$is_logged_in = isset($_SESSION['user_id']);
+$role = $_SESSION['role'] ?? 'guest';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DARKFM - Radio Station</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"/>
     <link rel="stylesheet" href="includes/assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
@@ -20,10 +29,18 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link active text-white-custom" href="#">Discover</a></li>
-                    <li class="nav-item"><a class="nav-link text-muted-custom" href="#">Rankings</a></li>
-                    <li class="nav-item"><a class="nav-link text-muted-custom" href="#">Blogs</a></li>
-                    <li class="nav-item"><a class="nav-link text-muted-custom" href="dashboard.php">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link text-muted-custom" href="actions/login.php">Login</a></li>
+                    
+                    <?php if ($role === 'user' || $role === 'admin'): ?>
+                        <li class="nav-item"><a class="nav-link text-muted-custom" href="#">Rankings</a></li>
+                        <li class="nav-item"><a class="nav-link text-muted-custom" href="#">Blogs</a></li>
+                        <li class="nav-item"><a class="nav-link text-muted-custom" href="dashboard.php">Dashboard</a></li>
+                    <?php endif; ?>
+
+                    <?php if ($is_logged_in): ?>
+                        <li class="nav-item"><a class="nav-link accent-color-red" href="actions/logout.php">Logout</a></li>
+                    <?php else: ?>
+                        <li class="nav-item"><a class="nav-link accent-color" href="actions/login.php">Login</a></li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>
@@ -97,6 +114,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <a href="manage-schedule.php" class="btn btn-outline-info w-100 mt-4 text-white-custom"
                        style="border-color: var(--accent); color: var(--accent); background: transparent;">
                         View the complete program schedule

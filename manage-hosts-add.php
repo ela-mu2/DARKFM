@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Host - DARKFM</title>
+    <title>DARKFM - Hosts Add</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"/>
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <div class="container my-4 my-md-5" style="max-width: 550px;">
     <div class="card card-dark p-3 p-md-4 shadow-sm">
-        <h3 class="mb-4 text-teal">New radio hosts</h3>
+        <h3 class="mb-4 text-teal">New host</h3>
         
         <?php if (!empty($message)): ?>
             <div class="alert alert-danger bg-dark text-white border-secondary mb-3">

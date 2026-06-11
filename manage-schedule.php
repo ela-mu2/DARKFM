@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Schedule - DARKFM</title>
+    <title>DARKFM - Schedule</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"/>
@@ -22,8 +22,8 @@ if (!isset($_SESSION['user_id'])) {
 
 <div class="container my-4 my-md-5">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
-        <h2 class="accent-color mb-0">Manage Schedule</h2>
-        <a href="manage-hosts-add.php" class="btn btn-accent w-md-auto">+ Add New host</a>
+        <h2 class="accent-color mb-0">Schedule</h2>
+        <a href="manage-hosts-add.php" class="btn btn-accent w-md-auto">+ New Schedule</a>
     </div>
 
     <div class="card bg-grey p-2 p-md-3 shadow-sm border-0 mb-4">

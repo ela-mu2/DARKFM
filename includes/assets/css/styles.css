@@ -53,6 +53,30 @@ h1, h2, h3, h4, h5, h6, .text-white-custom {
     background-color: var(--accent);
 }
 
+/* logout accent (Red) */
+.accent-color-red {
+    color: #EF4444;
+    transition: color 0.2s ease;
+}
+
+.btn-accent-red {
+    background-color: #EF4444;
+    color: #FFFFFF;
+    font-weight: 600;
+    border: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn-accent-red:hover {
+    background-color: #DC2626; /* 稍微深一点的红色，用于悬停反馈 */
+    color: #FFFFFF;
+}
+
+/* 如果注销进度条或倒计时需要红色，可以使用这个 */
+.progress-bar-accent-red {
+    background-color: #EF4444;
+}
+
 /* navbar */
 .navbar-custom {
     background-color: var(--bg-surface);
