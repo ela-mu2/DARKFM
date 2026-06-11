@@ -6,23 +6,24 @@ if (!isset($_SESSION['user_id'])) {
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DARKFM - Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
     <link rel="stylesheet" href="includes/assets/css/styles.css">
   </head>
   <body>
     <div class="container mx-auto my-5" style="max-width: 800px;">
-      <h1 class="h1 mb-4 text-center">Dashboard</h1>
-      <div class="row">
+      <h1 class="h1 mb-4 text-center text-white-custom">Dashboard</h1>
+      <div class="row g-3">
         <div class="col-lg-6">
-          <div class="card mb-2 card-custom">
-            <div class="card-body">
-              <h5 class="card-title text-center">
-                <div class="mb-1"><i class="bi bi-calendar-week" style="font-size: 3rem;"></i></div>
+          <div class="card card-custom h-100">
+            <div class="card-body d-flex flex-column justify-content-between">
+              <h5 class="card-title text-center text-white-custom">
+                <div class="mb-2"><i class="bi bi-calendar-week accent-color" style="font-size: 3rem;"></i></div>
                 Manage Schedule
               </h5>
               <div class="text-center mt-3">
@@ -33,10 +34,10 @@ if (!isset($_SESSION['user_id'])) {
         </div>
 
         <div class="col-lg-6">
-          <div class="card mb-2 card-custom">
-            <div class="card-body">
-              <h5 class="card-title text-center">
-                <div class="mb-1"><i class="bi bi-mic" style="font-size: 3rem;"></i></div>
+          <div class="card card-custom h-100">
+            <div class="card-body d-flex flex-column justify-content-between">
+              <h5 class="card-title text-center text-white-custom">
+                <div class="mb-2"><i class="bi bi-mic accent-color" style="font-size: 3rem;"></i></div>
                 Manage Hosts
               </h5>
               <div class="text-center mt-3">
@@ -47,10 +48,10 @@ if (!isset($_SESSION['user_id'])) {
         </div>
 
         <div class="col-lg-6">
-          <div class="card mb-2 mt-3 card-custom">
-            <div class="card-body">
-              <h5 class="card-title text-center">
-                <div class="mb-1"><i class="bi bi-collection-play" style="font-size: 3rem;"></i></div>
+          <div class="card card-custom h-100">
+            <div class="card-body d-flex flex-column justify-content-between">
+              <h5 class="card-title text-center text-white-custom">
+                <div class="mb-2"><i class="bi bi-collection-play accent-color" style="font-size: 3rem;"></i></div>
                 Manage Programs
               </h5>
               <div class="text-center mt-3">
@@ -61,10 +62,10 @@ if (!isset($_SESSION['user_id'])) {
         </div>
 
         <div class="col-lg-6">
-          <div class="card mb-2 mt-3 card-custom">
-            <div class="card-body">
-              <h5 class="card-title text-center">
-                <div class="mb-1"><i class="bi bi-person-circle" style="font-size: 3rem;"></i></div>
+          <div class="card card-custom h-100">
+            <div class="card-body d-flex flex-column justify-content-between">
+              <h5 class="card-title text-center text-white-custom">
+                <div class="mb-2"><i class="bi bi-person-circle accent-color" style="font-size: 3rem;"></i></div>
                 Manage Users
               </h5>
               <div class="text-center mt-3">
@@ -74,15 +75,14 @@ if (!isset($_SESSION['user_id'])) {
           </div>
         </div>
       </div>
-      <div class="mt-4 text-center">
+      <div class="mt-5 text-center">
         <a href="index.html" class="btn btn-outline-info btn-sm"
-           style="border-color: var(--accent); color: var(--accent);">
-          <i class="bi bi-arrow-left"></i> Back
+           style="border-color: var(--accent); color: var(--accent); background: transparent;">
+          <i class="bi bi-arrow-left"></i> Back to Homepage
         </a>
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

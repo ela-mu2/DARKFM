@@ -22,7 +22,8 @@
                     <li class="nav-item"><a class="nav-link active text-white-custom" href="#">Discover</a></li>
                     <li class="nav-item"><a class="nav-link text-muted-custom" href="#">Rankings</a></li>
                     <li class="nav-item"><a class="nav-link text-muted-custom" href="#">Blogs</a></li>
-                    <li class="nav-item"><a class="nav-link text-muted-custom" href="/DARKFM/actions/login.php">Login</a></li>
+                    <li class="nav-item"><a class="nav-link text-muted-custom" href="dashboard.php">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link text-muted-custom" href="actions/login.php">Login</a></li>
                 </ul>
             </div>
         </div>
@@ -69,35 +70,37 @@
             </div>
 
             <div class="col-lg-4">
-                <div class="card-custom p-4 h-100">
-                    <h4 class="fw-bold text-white-custom mb-4">Next program</h4>
-                    <div class="d-flex flex-column gap-3" id="next-programs">
-                        <div class="d-flex align-items-center p-2 rounded hover-bg" style="background: rgba(255,255,255,0.02)">
-                            <div class="me-3 accent-color fw-bold">14:00</div>
-                            <div>
-                                <h6 class="mb-0 text-white-custom">Future Talk: AI and Human Narrative</h6>
-                                <small class="text-muted-custom">Podcast Guest: Dr. Alex</small>
+                <div class="card-custom p-4 h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <h4 class="fw-bold text-white-custom mb-4">Next program</h4>
+                        <div class="d-flex flex-column gap-3" id="next-programs">
+                            <div class="d-flex align-items-center p-2 rounded hover-bg" style="background: rgba(255,255,255,0.02)">
+                                <div class="me-3 accent-color fw-bold">14:00</div>
+                                <div>
+                                    <h6 class="mb-0 text-white-custom">Future Talk: AI and Human Narrative</h6>
+                                    <small class="text-muted-custom">Podcast Guest: Dr. Alex</small>
+                                </div>
                             </div>
-                        </div>
-                        <div class="d-flex align-items-center p-2 rounded" style="background: rgba(255,255,255,0.02)">
-                            <div class="me-3 text-muted-custom fw-bold">16:30</div>
-                            <div>
-                                <h6 class="mb-0 text-white-custom">Post-rock Space: Weightlessness</h6>
-                                <small class="text-muted-custom">Music Special</small>
+                            <div class="d-flex align-items-center p-2 rounded" style="background: rgba(255,255,255,0.02)">
+                                <div class="me-3 text-muted-custom fw-bold">16:30</div>
+                                <div>
+                                    <h6 class="mb-0 text-white-custom">Post-rock Space: Weightlessness</h6>
+                                    <small class="text-muted-custom">Music Special</small>
+                                </div>
                             </div>
-                        </div>
-                        <div class="d-flex align-items-center p-2 rounded" style="background: rgba(255,255,255,0.02)">
-                            <div class="me-3 text-muted-custom fw-bold">19:00</div>
-                            <div>
-                                <h6 class="mb-0 text-white-custom">Jazzy Moments</h6>
-                                <small class="text-muted-custom">Classic vinyl record playback</small>
+                            <div class="d-flex align-items-center p-2 rounded" style="background: rgba(255,255,255,0.02)">
+                                <div class="me-3 text-muted-custom fw-bold">19:00</div>
+                                <div>
+                                    <h6 class="mb-0 text-white-custom">Jazzy Moments</h6>
+                                    <small class="text-muted-custom">Classic vinyl record playback</small>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-outline-info w-100 mt-4 text-white-custom"
-                            style="border-color: var(--accent); color: var(--accent);">
+                    <a href="manage-schedule.php" class="btn btn-outline-info w-100 mt-4 text-white-custom"
+                       style="border-color: var(--accent); color: var(--accent); background: transparent;">
                         View the complete program schedule
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>

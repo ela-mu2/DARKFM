@@ -12,7 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($name)) {
         try {
             $sql = "INSERT INTO hosts (name, bio, contact_email) VALUES (:name, :bio, :contact_email)";
-            // 把 $db 改成 $pdo
             $stmt = $pdo->prepare($sql); 
             $stmt->execute([
                 ':name'          => $name,
@@ -23,11 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         } catch (PDOException $e) {
             $status = 'error';
-            $message = '数据库错误: ' . $e->getMessage();
+            $message = 'Database error:' . $e->getMessage();
         }
     } else {
         $status = 'error';
-        $message = '请填写主持人名字！';
+        $message = "Please fill in the host's name!";
     }
 }
 ?>
@@ -35,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Host - DARKFM</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"/>
@@ -44,9 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-<div class="container mt-5" style="max-width: 550px;">
-    <div class="card card-dark p-4 shadow-sm">
-        <h3 class="mb-4 text-teal">新增电台主持人</h3>
+<div class="container my-4 my-md-5" style="max-width: 550px;">
+    <div class="card card-dark p-3 p-md-4 shadow-sm">
+        <h3 class="mb-4 text-teal">New radio hosts</h3>
         
         <?php if (!empty($message)): ?>
             <div class="alert alert-danger bg-dark text-white border-secondary mb-3">
@@ -56,23 +56,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         <form action="manage-hosts-add.php" method="POST">
             <div class="mb-3">
-                <label class="form-label text-secondary">主持人艺名 / Name <span class="text-danger">*</span></label>
-                <input type="text" name="name" class="form-control" placeholder="请输入主持人名字" required>
+                <label class="form-label text-secondary">Host's name<span class="text-danger">*</span></label>
+                <input type="text" name="name" class="form-control" placeholder="Please enter the host's name" required>
             </div>
             
             <div class="mb-3">
-                <label class="form-label text-secondary">联系邮箱 / Contact Email</label>
+                <label class="form-label text-secondary">Contact Email</label>
                 <input type="email" name="contact_email" class="form-control" placeholder="example@darkfm.com">
             </div>
             
             <div class="mb-3">
-                <label class="form-label text-secondary">个人简介 / Bio</label>
-                <textarea name="bio" class="form-control" rows="4" placeholder="介绍一下这位主持人的个性和擅长节目..."></textarea>
+                <label class="form-label text-secondary">Bio</label>
+                <textarea name="bio" class="form-control" rows="4" placeholder="Introduce this host's personality and strengths in programming..."></textarea>
             </div>
             
-            <div class="d-flex gap-2 mt-4">
-                <a href="manage-hosts.php" class="btn btn-secondary w-50 py-2 border-0 text-white-custom" style="background: rgba(255, 255, 255, 0.1);">取消</a>
-                <button type="submit" class="btn btn-accent w-50 py-2">保存主持人</button>
+            <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
+                <a href="manage-hosts.php" class="btn btn-secondary w-100 w-sm-50 py-2 border-0 text-white-custom order-2 order-sm-1" style="background: rgba(255, 255, 255, 0.1);">Cancel</a>
+                <button type="submit" class="btn btn-accent w-100 w-sm-50 py-2 order-1 order-sm-2">Preserve the host</button>
             </div>
         </form>
     </div>
