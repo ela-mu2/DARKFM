@@ -28,7 +28,7 @@ $role = $_SESSION['role'] ?? 'guest';
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active text-white-custom" href="#">Discover</a></li>
+                    <li class="nav-item"><a class="nav-link active text-white-custom" href="discover.php">Discover</a></li>
                     
                     <?php if ($role === 'user' || $role === 'admin'): ?>
                         <li class="nav-item"><a class="nav-link text-muted-custom" href="#">Rankings</a></li>

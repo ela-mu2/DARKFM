@@ -2,6 +2,8 @@
 require('config/db.php');
 require('includes/header.php');
 
+$role = $_SESSION['role'] ?? 'guest';
+
 try {
     $stmt = $pdo->query("SELECT * FROM hosts ORDER BY id DESC");
     $hosts = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -27,7 +29,9 @@ try {
 <div class="container my-4 my-md-5">
     <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
         <h2 class="accent-color mb-0">Hosts</h2>
-        <a href="manage-hosts-add.php" class="btn btn-accent w-md-auto">+ New Host</a>
+        <?php if ($role === 'admin'): ?>
+            <a href="manage-hosts-add.php" class="btn btn-accent w-md-auto">+ New Host</a>
+        <?php endif; ?>
     </div>
 
     <div class="card bg-grey p-2 p-md-3 shadow-sm border-0 mb-4">
@@ -56,8 +60,12 @@ try {
                                 <td class="text-muted-custom text-wrap" style="max-width: 300px;"><?= htmlspecialchars($host['bio'] ?: 'No bio available') ?></td>
                                 <td>
                                     <div class="d-flex justify-content-center gap-2">
-                                        <a href="manage-hosts-edit.php?id=<?= $host['id'] ?>" class="btn btn-sm btn-outline-info">Edit</a>
-                                        <button class="btn btn-sm btn-outline-danger" onclick="deleteHost(<?= $host['id'] ?>)">Delete</button>
+                                        <?php if ($role === 'admin'): ?>
+                                            <a href="manage-hosts-edit.php?id=<?= $host['id'] ?>" class="btn btn-sm btn-outline-info">Edit</a>
+                                            <button class="btn btn-sm btn-outline-danger" onclick="deleteHost(<?= $host['id'] ?>)">Delete</button>
+                                        <?php else: ?>
+                                            <span class="text-muted-custom">-</span>
+                                        <?php endif; ?>
                                     </div>
                                 </td>
                             </tr>

@@ -101,8 +101,8 @@ $role = $_SESSION['role'];
       <div class="col-lg-2"></div>
       <?php endif; ?>
 
-      <?php if ($role === 'user'): ?>
-      <div class="col-lg-4">
+      <?php if ($role === 'viewer'): ?>
+      <div class="col-lg-6">
         <div class="card card-custom h-100">
           <div class="card-body d-flex flex-column justify-content-between">
             <h5 class="card-title text-center text-white-custom">
@@ -116,7 +116,7 @@ $role = $_SESSION['role'];
         </div>
       </div>
 
-      <div class="col-lg-4">
+      <div class="col-lg-6">
         <div class="card card-custom h-100">
           <div class="card-body d-flex flex-column justify-content-between">
             <h5 class="card-title text-center text-white-custom">
@@ -130,7 +130,7 @@ $role = $_SESSION['role'];
         </div>
       </div>
         
-      <div class="col-lg-4">
+      <div class="col-lg-6">
         <div class="card card-custom h-100">
           <div class="card-body d-flex flex-column justify-content-between">
             <h5 class="card-title text-center text-white-custom">
@@ -144,9 +144,7 @@ $role = $_SESSION['role'];
         </div>
       </div>
 
-      <div class="col-lg-2"></div>
-      
-      <div class="col-lg-4">
+      <div class="col-lg-6">
         <div class="card card-custom h-100">
           <div class="card-body d-flex flex-column justify-content-between">
             <h5 class="card-title text-center text-white-custom">

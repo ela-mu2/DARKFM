@@ -4,6 +4,7 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: actions/login.php");
     exit;
 }
+$role = $_SESSION['role'] ?? 'guest';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +24,9 @@ if (!isset($_SESSION['user_id'])) {
 <div class="container my-4 my-md-5">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
         <h2 class="accent-color mb-0">Schedule</h2>
-        <a href="manage-hosts-add.php" class="btn btn-accent w-md-auto">+ New Schedule</a>
+        <?php if ($role === 'admin'): ?>
+            <a href="manage-hosts-add.php" class="btn btn-accent w-md-auto">+ New Schedule</a>
+        <?php endif; ?>
     </div>
 
     <div class="card bg-grey p-2 p-md-3 shadow-sm border-0 mb-4">
@@ -58,6 +61,7 @@ if (!isset($_SESSION['user_id'])) {
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const tableBody = document.getElementById('schedule-table-body');
+    const userRole = <?php echo json_encode($role); ?>;
 
     fetch('api/api_get.php')
         .then(response => {
@@ -84,6 +88,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let html = '';
         schedules.forEach(item => {
+            let actionsHtml = `<span class="text-muted-custom">-</span>`;
+            if (userRole === 'admin') {
+                actionsHtml = `
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="manage-schedule-edit.php?id=${item.schedule_id}" class="btn btn-sm btn-outline-info">Edit</a>
+                        <button class="btn btn-sm btn-outline-danger btn-delete" data-id="${item.schedule_id}">Delete</button>
+                    </div>
+                `;
+            }
+
             html += `
             <tr id="schedule-row-${item.schedule_id}" class="align-middle">
               <td class="text-white-custom">${item.schedule_id}</td>
@@ -95,10 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span class="badge d-inline-block text-wrap text-start" style="border: 1px solid var(--accent); color: var(--accent); background: transparent; padding: 6px 10px;">${item.air_date} ${item.start_time}</span>
               </td>
               <td class="text-center">
-                <div class="d-flex justify-content-center gap-2">
-                    <a href="manage-schedule-edit.php?id=${item.schedule_id}" class="btn btn-sm btn-outline-info">Edit</a>
-                    <button class="btn btn-sm btn-outline-danger btn-delete" data-id="${item.schedule_id}">Delete</button>
-                </div>
+                ${actionsHtml}
               </td>
             </tr>
             `;
