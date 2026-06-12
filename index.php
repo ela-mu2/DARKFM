@@ -46,14 +46,16 @@ $role = $_SESSION['role'] ?? 'guest';
         </div>
     </nav>
 
+    <!-- Main Path -->
     <div class="container my-5">
         <div class="row g-4">
             <div class="col-lg-8">
                 <div class="card-custom p-4 h-100 d-flex flex-column justify-content-between">
+                    <!-- 新增随机数 -->
                     <div>
                         <span class="badge bg-danger mb-3 px-3 py-2">LIVE Streaming</span>
                         <h2 class="fw-bold text-white-custom mb-1">Night Radio - City Neon Lights and Electronic Music</h2>
-                        <p class="text-muted-custom">Current audience: 2,405 people</p>
+                        <p class="text-muted-custom">Current audience: <span id="audience-count">Loading...</span> people</p>
                     </div>
                     <div class="row align-items-center my-4">
                         <div class="col-md-4 text-center mb-3 mb-md-0">
@@ -86,41 +88,78 @@ $role = $_SESSION['role'] ?? 'guest';
                 </div>
             </div>
 
+            <!-- Next Program Path -->
             <div class="col-lg-4">
                 <div class="card-custom p-4 h-100 d-flex flex-column justify-content-between">
                     <div>
                         <h4 class="fw-bold text-white-custom mb-4">Next program</h4>
                         <div class="d-flex flex-column gap-3" id="next-programs">
-                            <div class="d-flex align-items-center p-2 rounded hover-bg" style="background: rgba(255,255,255,0.02)">
-                                <div class="me-3 accent-color fw-bold">14:00</div>
-                                <div>
-                                    <h6 class="mb-0 text-white-custom">Future Talk: AI and Human Narrative</h6>
-                                    <small class="text-muted-custom">Podcast Guest: Dr. Alex</small>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center p-2 rounded" style="background: rgba(255,255,255,0.02)">
-                                <div class="me-3 text-muted-custom fw-bold">16:30</div>
-                                <div>
-                                    <h6 class="mb-0 text-white-custom">Post-rock Space: Weightlessness</h6>
-                                    <small class="text-muted-custom">Music Special</small>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center p-2 rounded" style="background: rgba(255,255,255,0.02)">
-                                <div class="me-3 text-muted-custom fw-bold">19:00</div>
-                                <div>
-                                    <h6 class="mb-0 text-white-custom">Jazzy Moments</h6>
-                                    <small class="text-muted-custom">Classic vinyl record playback</small>
-                                </div>
-                            </div>
+                            <div class="text-center text-muted-custom py-3">Loading...</div>
                         </div>
                     </div>
                     
-                    <a href="manage-schedule.php" class="btn btn-outline-info w-100 mt-4 text-white-custom"
-                       style="border-color: var(--accent); color: var(--accent); background: transparent;">
+                    <?php 
+                    $schedule_url = ($role === 'guest') ? 'schedule.php' : 'manage-schedule.php'; 
+                    ?>
+                    <a href="<?php echo $schedule_url; ?>" class="btn btn-outline-info w-100 mt-4 text-white-custom"
+                    style="border-color: var(--accent); color: var(--accent); background: transparent;">
                         View the complete program schedule
                     </a>
                 </div>
             </div>
+
+            <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const nextProgramsContainer = document.getElementById('next-programs');
+
+                fetch('api/api_get.php')
+                    .then(response => response.json())
+                    .then(res => {
+                        if (res.status === 'success' && res.data && res.data.length > 0) {
+                            const topFive = res.data.slice(0, 5);
+                            let html = '';
+                            
+                            topFive.forEach((item, index) => {
+                                const timeColorClass = index === 0 ? 'accent-color' : 'text-muted-custom';
+                                const hoverClass = index === 0 ? 'hover-bg' : '';
+                                
+                                // 核心修改：处理时间格式 hh:mm:ss -> hh:mm
+                                const fullTime = item.start_time || '00:00:00';
+                                const shortTime = fullTime.slice(0, 5); 
+                                
+                                html += `
+                                <div class="d-flex align-items-center p-2 rounded ${hoverClass}" style="background: rgba(255,255,255,0.02)">
+                                    <div class="me-3 ${timeColorClass} fw-bold">${shortTime}</div>
+                                    <div>
+                                        <h6 class="mb-0 text-white-custom">${item.program_title || 'Unknown Program'}</h6>
+                                        <small class="text-muted-custom">Host: ${item.host_name || 'No Host'}</small>
+                                    </div>
+                                </div>
+                                `;
+                            });
+                            nextProgramsContainer.innerHTML = html;
+                        } else {
+                            nextProgramsContainer.innerHTML = '<div class="text-muted-custom py-3">No upcoming programs.</div>';
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Fetch error:', err);
+                        nextProgramsContainer.innerHTML = '<div class="text-danger py-3">Failed to load.</div>';
+                    });
+                });
+
+            // 随机数运算
+            document.addEventListener('DOMContentLoaded', () => {
+                // 生成 2400 到 2499 之间的随机整数
+                const min = 2400;
+                const max = 2499;
+                const randomAudience = Math.floor(Math.random() * (max - min + 1)) + min;
+
+                // 写入到页面中
+                document.getElementById('audience-count').textContent = randomAudience.toLocaleString();
+            });
+            </script>
+
         </div>
     </div>
 
