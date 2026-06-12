@@ -31,9 +31,14 @@ $role = $_SESSION['role'] ?? 'guest';
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-lg-center"> <li class="nav-item"><a class="nav-link active text-white-custom" href="discover.php">Discover</a></li>
                     
-                    <?php if ($role === 'user' || $role === 'admin'): ?>
+                    <!-- 游客不可见 -->
+                    <?php if ($role !== 'guest'): ?>
                         <li class="nav-item"><a class="nav-link text-muted-custom" href="#">Rankings</a></li>
                         <li class="nav-item"><a class="nav-link text-muted-custom" href="#">Blogs</a></li>
+                    <?php endif; ?>
+                        
+                    <!-- 观众与游客不可见 -->
+                    <?php if (!in_array($role, ['guest', 'viewer'])): ?>
                         <li class="nav-item"><a class="nav-link text-muted-custom" href="dashboard.php">Dashboard</a></li>
                     <?php endif; ?>
 
@@ -118,7 +123,7 @@ $role = $_SESSION['role'] ?? 'guest';
                         </div>
                     </div>
                     
-                    <?php 
+                    <?php //游客与观众进入普通大厅 
                     $schedule_url = ($role === 'guest' || $role === 'viewer') ? 'schedule.php' : 'manage-schedule.php'; 
                     ?>
                     <a href="<?php echo $schedule_url; ?>" class="btn btn-outline-info w-100 mt-4 text-white-custom"
