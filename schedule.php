@@ -20,9 +20,9 @@
             <table class="table table-dark table-hover mb-0 bg-transparent text-nowrap" style="min-width: 600px;">
                 <thead>
                     <tr>
-                        <th class="accent-color" style="width: 10%;">ID</th>
-                        <th class="accent-color" style="width: 50%;">Title (Program / Host)</th>
-                        <th class="accent-color" style="width: 40%;">Air Time</th>
+                        <th class="accent-color" style="width: 20%;">ID</th>
+                        <th class="accent-color" style="width: 60%;">Title (Program / Host)</th>
+                        <th class="accent-color" style="width: 20%;">Air Time</th>
                     </tr>
                 </thead>
                 <tbody id="schedule-table-body">
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <small class="text-muted-custom">Host: ${item.host_name || 'No Host'} | ${item.program_genre || 'N/A'}</small>
               </td>
               <td>
-                <span class="badge d-inline-block text-wrap text-start" style="border: 1px solid var(--accent); color: var(--accent); background: transparent; padding: 6px 10px;">${item.air_date} ${item.start_time}</span>
+                <span class="badge d-inline-block text-wrap text-start" style="border: 1px solid var(--accent); color: var(--accent); background: transparent; padding: 6px 10px;">${item.air_date} ${item.start_time.slice(0, 5)}</span>
               </td>
             </tr>
             `;

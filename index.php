@@ -26,14 +26,34 @@ $role = $_SESSION['role'] ?? 'guest';
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+            <!-- Nav Bar -->
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active text-white-custom" href="discover.php">Discover</a></li>
+                <ul class="navbar-nav ms-auto align-items-lg-center"> <li class="nav-item"><a class="nav-link active text-white-custom" href="discover.php">Discover</a></li>
                     
                     <?php if ($role === 'user' || $role === 'admin'): ?>
                         <li class="nav-item"><a class="nav-link text-muted-custom" href="#">Rankings</a></li>
                         <li class="nav-item"><a class="nav-link text-muted-custom" href="#">Blogs</a></li>
                         <li class="nav-item"><a class="nav-link text-muted-custom" href="dashboard.php">Dashboard</a></li>
+                    <?php endif; ?>
+
+                    <?php if ($is_logged_in): ?>
+                        <?php
+                        // 根据不同角色定义颜色类名（可根据 CSS 自行调整或使用 Bootstrap 内置颜色）
+                        $role_color_class = 'text-muted-custom'; // 默认颜色
+                        if ($role === 'admin') {
+                            $role_color_class = 'text-danger fw-bold'; // 管理员红色
+                        } elseif ($role === 'editor') {
+                            $role_color_class = 'text-warning fw-bold'; // 编辑黄色
+                        } elseif ($role === 'user') {
+                            $role_color_class = 'text-info fw-bold'; // 普通用户蓝色
+                        }
+                        ?>
+                        <li class="nav-item px-lg-2 py-2 py-lg-0">
+                            <span class="<?php echo $role_color_class; ?>">
+                                <i class="bi bi-person-circle me-1"></i><?php echo htmlspecialchars($role); ?>
+                            </span>
+                        </li>
                     <?php endif; ?>
 
                     <?php if ($is_logged_in): ?>
@@ -99,7 +119,7 @@ $role = $_SESSION['role'] ?? 'guest';
                     </div>
                     
                     <?php 
-                    $schedule_url = ($role === 'guest') ? 'schedule.php' : 'manage-schedule.php'; 
+                    $schedule_url = ($role === 'guest' || $role === 'viewer') ? 'schedule.php' : 'manage-schedule.php'; 
                     ?>
                     <a href="<?php echo $schedule_url; ?>" class="btn btn-outline-info w-100 mt-4 text-white-custom"
                     style="border-color: var(--accent); color: var(--accent); background: transparent;">

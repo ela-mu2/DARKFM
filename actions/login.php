@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <?php if ($login_success): ?>
         Swal.fire({
             title: 'Welcome Back!',
-            text: 'Login successful, loading your dashboard...',
+            text: 'Login successful, entering the lobby...',
             icon: 'success',
             background: '#1e293b',
             color: '#fff',
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
             timer: 2500,
             showConfirmButton: false,
             willClose: () => {
-                window.location.href = '../dashboard.php';
+                window.location.href = '../index.php';
             }
         });
     <?php endif; ?>
